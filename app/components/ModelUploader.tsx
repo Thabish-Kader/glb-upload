@@ -2,24 +2,16 @@
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useState } from "react";
-import { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 
 interface ModelProps {
 	url: string;
 }
 
 function Model({ url }: ModelProps) {
-	const { nodes, material } = useGLTF(url) as any;
+	const model = useGLTF(url) as any;
 	return (
 		<>
-			{nodes &&
-				Object.values(nodes).map((node, index) => (
-					<mesh
-						key={index}
-						geometry={node.geometry}
-						material={node.material}
-					/>
-				))}
+			<primitive object={model.scene} />
 		</>
 	);
 }
