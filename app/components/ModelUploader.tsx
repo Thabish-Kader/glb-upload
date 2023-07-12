@@ -9,6 +9,8 @@ interface ModelProps {
 
 function Model({ url }: ModelProps) {
 	const model = useGLTF(url) as any;
+
+	console.log(model.nodes);
 	return (
 		<>
 			<primitive object={model.scene} />
@@ -18,6 +20,7 @@ function Model({ url }: ModelProps) {
 
 function ModelUploader() {
 	const [url, seturl] = useState("./product.glb");
+
 	const handleFileUpload = async (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
