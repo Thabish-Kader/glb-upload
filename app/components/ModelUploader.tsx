@@ -10,7 +10,6 @@ interface ModelProps {
 function Model({ url }: ModelProps) {
 	const model = useGLTF(url) as any;
 
-	console.log(model.nodes);
 	return (
 		<>
 			<primitive object={model.scene} />
