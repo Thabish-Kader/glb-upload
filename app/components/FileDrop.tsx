@@ -1,4 +1,6 @@
 "use client";
+import { SyntheticEvent, useCallback } from "react";
+import suzanne from "../../public/product.glb";
 import {
 	useDropzone,
 	DropzoneRootProps,
@@ -6,13 +8,26 @@ import {
 	FileRejection,
 	Accept,
 } from "react-dropzone";
+import useStore from "../../utils/store";
+import arrayBufferToString from "@/utils/arrayBufferToString";
 
-interface FileDropProps {
-	onDrop: (acceptedFiles: File[], fileRejections: FileRejection[]) => void;
-	useSuzanne: () => void;
-}
+const FileDrop = ({}) => {
+	const onDrop = useCallback((acceptedFiles: File[]) => {
+		acceptedFiles.forEach((file) => {
+			const reader = new FileReader();
+			reader.onabort = () => console.error("file reading was aborted");
+			reader.onerror = () => console.error("file reading has failed");
+			reader.onload = async () => {
+				const data = reader.result;
+				useStore.setState({ buffer: data, fileName: file.name });
+				arrayBufferToString(data as ArrayBuffer, (a) =>
+					useStore.setState({ textOriginalFile: a })
+				);
+			};
+			reader.readAsArrayBuffer(file);
+		});
+	}, []);
 
-const FileDrop: React.FC<FileDropProps> = ({ onDrop, useSuzanne }) => {
 	const { getRootProps, getInputProps, isDragActive, fileRejections } =
 		useDropzone({
 			onDrop,
@@ -22,6 +37,16 @@ const FileDrop: React.FC<FileDropProps> = ({ onDrop, useSuzanne }) => {
 				".glb": ["model/gltf-binary"],
 			} as Accept,
 		});
+
+	const useSuzanne = (e: SyntheticEvent) => {
+		e.preventDefault();
+		e.stopPropagation();
+		useStore.setState({
+			buffer: suzanne,
+			fileName: "suzanne.gltf",
+			textOriginalFile: suzanne,
+		});
+	};
 
 	return (
 		<div

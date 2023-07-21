@@ -12,7 +12,8 @@ export default function Viewer({
 	intensity,
 }) {
 	const scene = useStore((store) => store.scene);
-	const ref = useRef();
+	const ref = useRef(null!);
+
 	useLayoutEffect(() => {
 		scene.traverse((obj) => {
 			if (obj.isMesh) {
