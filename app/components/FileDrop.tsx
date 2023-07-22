@@ -11,7 +11,7 @@ import {
 import useStore from "../../utils/store";
 import arrayBufferToString from "@/utils/arrayBufferToString";
 
-const FileDrop = ({}) => {
+const FileDrop = () => {
 	const onDrop = useCallback((acceptedFiles: File[]) => {
 		acceptedFiles.forEach((file) => {
 			const reader = new FileReader();
