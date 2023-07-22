@@ -6,7 +6,7 @@ import FileDrop from "./components/FileDrop";
 
 export default function Home() {
 	return (
-		<main className="">
+		<main className="h-screen">
 			{/* <ModelUploader /> */}
 			<FileDrop />
 		</main>
