@@ -5,6 +5,8 @@ import arrayBufferToString from "@/utils/arrayBufferToString";
 import suzanne from "../public/product.glb";
 import FileDrop from "./components/FileDrop";
 import { Result } from "./components/Result";
+import { Viewer } from "./components/Viewer";
+import { useGLTF } from "@react-three/drei";
 
 export default function Home() {
 	const { buffer } = useStore((state) => ({
@@ -12,7 +14,7 @@ export default function Home() {
 	}));
 
 	const onDrop = useCallback((acceptedFiles: File[]) => {
-		acceptedFiles.forEach((file) => {
+		acceptedFiles.forEach(async (file) => {
 			const reader = new FileReader();
 			reader.onabort = () => console.error("file reading was aborted");
 			reader.onerror = () => console.error("file reading has failed");
@@ -25,7 +27,6 @@ export default function Home() {
 				arrayBufferToString(data as ArrayBuffer, (a) =>
 					useStore.setState({ textOriginalFile: a })
 				);
-				console.log(data);
 			};
 			reader.readAsArrayBuffer(file);
 		});
@@ -42,7 +43,6 @@ export default function Home() {
 	};
 	return (
 		<main className="h-screen">
-			{/* <ModelUploader /> */}
 			{buffer ? (
 				<Result />
 			) : (
