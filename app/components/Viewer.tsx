@@ -3,25 +3,18 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Stage } from "@react-three/drei";
 import useStore from "../../utils/store";
 
-export default function Viewer({
-	shadows,
-	contactShadow,
-	autoRotate,
-	environment,
-	preset,
-	intensity,
-}) {
+export const Viewer = ({}) => {
 	const scene = useStore((store) => store.scene);
 	const ref = useRef(null!);
 
 	useLayoutEffect(() => {
-		scene.traverse((obj) => {
+		scene.traverse((obj: any) => {
 			if (obj.isMesh) {
-				obj.castShadow = obj.receiveShadow = shadows;
+				// obj.castShadow = obj.receiveShadow = shadows;
 				obj.material.envMapIntensity = 0.8;
 			}
 		});
-	}, [scene, shadows]);
+	}, [scene]);
 
 	return (
 		<Canvas
@@ -33,18 +26,18 @@ export default function Viewer({
 			<ambientLight intensity={0.25} />
 			<Suspense fallback={null}>
 				<Stage
-					controls={ref}
-					preset={preset}
-					intensity={intensity}
-					contactShadow={contactShadow}
-					shadows
-					adjustCamera
-					environment={environment}
+				// controls={ref}
+				// preset={preset}
+				// intensity={intensity}
+				// contactShadow={contactShadow}
+				// shadows
+				// adjustCamera
+				// environment={environment}
 				>
 					<primitive object={scene} />
 				</Stage>
 			</Suspense>
-			<OrbitControls ref={ref} autoRotate={autoRotate} />
+			<OrbitControls ref={ref} />
 		</Canvas>
 	);
-}
+};

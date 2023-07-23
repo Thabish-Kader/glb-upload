@@ -4,6 +4,7 @@ import useStore from "../utils/store";
 import arrayBufferToString from "@/utils/arrayBufferToString";
 import suzanne from "../public/product.glb";
 import FileDrop from "./components/FileDrop";
+import { Result } from "./components/Result";
 
 export default function Home() {
 	const { buffer } = useStore((state) => ({
@@ -42,7 +43,11 @@ export default function Home() {
 	return (
 		<main className="h-screen">
 			{/* <ModelUploader /> */}
-			<FileDrop onDrop={onDrop} useSuzanne={useSuzanne} />
+			{buffer ? (
+				<Result />
+			) : (
+				<FileDrop onDrop={onDrop} useSuzanne={useSuzanne} />
+			)}
 		</main>
 	);
 }

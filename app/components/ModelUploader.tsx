@@ -10,7 +10,7 @@ interface ModelProps {
 
 function Model({ url, props }: ModelProps) {
 	const { nodes, materials } = useGLTF(url) as any;
-	console.log(nodes);
+
 	return <group {...props} dispose={null}></group>;
 }
 

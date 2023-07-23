@@ -1,15 +1,6 @@
 "use client";
 import { SyntheticEvent, useCallback, FC } from "react";
-import suzanne from "../../public/product.glb";
-import {
-	useDropzone,
-	DropzoneRootProps,
-	DropzoneInputProps,
-	FileRejection,
-	Accept,
-} from "react-dropzone";
-import useStore from "../../utils/store";
-import arrayBufferToString from "@/utils/arrayBufferToString";
+import { useDropzone } from "react-dropzone";
 
 type FileDropProps = {
 	onDrop: (files: File[]) => void;
@@ -21,7 +12,10 @@ const FileDrop: FC<FileDropProps> = ({ onDrop, useSuzanne }) => {
 		useDropzone({
 			onDrop,
 			maxFiles: 1,
-			accept: ".gltf .glb",
+			accept: {
+				"model/gltf-binary": [".glb"],
+				"model/gltf+json": [".gltf"],
+			},
 		});
 
 	return (
