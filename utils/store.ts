@@ -30,7 +30,7 @@ if (typeof window !== "undefined") {
 		.setKTX2Loader(ktx2Loader.detectSupport(new WebGLRenderer()));
 }
 
-const useStore = create<StoreState>()((get, set) => ({
+const useStore = create<StoreState>()((set) => ({
 	fileName: "",
 	buffer: null,
 	textOriginalFile: "",
