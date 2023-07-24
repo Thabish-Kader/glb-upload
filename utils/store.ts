@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { KTX2Loader } from "three/examples/jsm/loaders/KTX2Loader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import { WebGLRenderer } from "three";
@@ -10,7 +10,6 @@ interface StoreState {
 	buffer: ArrayBuffer | null | string;
 	textOriginalFile: string;
 	scene: THREE.Scene | null;
-	generateScene: () => Promise<void>;
 }
 
 let gltfLoader: GLTFLoader;
@@ -35,16 +34,6 @@ const useStore = create<StoreState>()((set) => ({
 	buffer: null,
 	textOriginalFile: "",
 	scene: null,
-	generateScene: async () => {
-		const buffer = useStore.getState().buffer;
-		const result = await new Promise((resolve, reject) =>
-			gltfLoader.parse(buffer!, "", resolve, reject)
-		);
-
-		if (!useStore.getState().scene) {
-			set({ scene: result.scene });
-		}
-	},
 }));
 
 export default useStore;

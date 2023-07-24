@@ -5,10 +5,9 @@ import arrayBufferToString from "@/utils/arrayBufferToString";
 import suzanne from "../public/product.glb";
 import FileDrop from "./components/FileDrop";
 import { Result } from "./components/Result";
-import { Viewer } from "./components/Viewer";
-import { useGLTF } from "@react-three/drei";
+import ModelUploader from "./components/ModelUploader";
 
-export default function Home() {
+export default async function Home() {
 	const { buffer } = useStore((state) => ({
 		buffer: state.buffer,
 	}));
@@ -43,11 +42,12 @@ export default function Home() {
 	};
 	return (
 		<main className="h-screen">
-			{buffer ? (
+			{/* {buffer ? (
 				<Result />
 			) : (
 				<FileDrop onDrop={onDrop} useSuzanne={useSuzanne} />
-			)}
+			)} */}
+			<ModelUploader />
 		</main>
 	);
 }
